@@ -1,15 +1,17 @@
-import './App.css';
-import BottomBar from './component/Bar/bottomBar';
-import TopBar from './component/Bar/topBar';
-import OrderBox from './component/orders/orderBox';
-// import OrderContainer from './component/orders/orderContainer';
+import "./App.css";
+import BottomBar from "./component/Bar/bottomBar";
+import TopBar from "./component/Bar/topBar";
+import OrderBox from "./component/orders/orderBox";
+import { OrderProvider } from "./component/store/OrderContext";
 
 function App() {
   return (
     <>
-     <TopBar/>
-     <OrderBox/>
-     <BottomBar/>
+      <OrderProvider>
+        <TopBar />
+        <OrderBox />
+        <BottomBar />
+      </OrderProvider>
     </>
   );
 }

@@ -3,11 +3,12 @@ import React, { useState } from "react";
 const OrderCtx = React.createContext();
 
 const OrderProvider = ({ children }) => {
-  const [selectedUser, setSelectedUser] = useState([]);
+  const [anyChange, setAnyChange] = useState(0);
+  const [selectedOrder, setSelectedOrder] = useState([]);
 
   return (
     <OrderCtx.Provider
-      value={{ selectedUser, setSelectedUser }}
+      value={{ anyChange, setAnyChange,selectedOrder, setSelectedOrder }}
     >
       {children}
     </OrderCtx.Provider>

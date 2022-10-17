@@ -7,8 +7,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Divider, Stack, TextField, Checkbox, Button } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { OrderCtx } from "../store/OrderContext";
+import UpdateForm from "./updateOrder";
 
 export default function BasicTable() {
   const [ordersData, setOrdersData] = useState([]);
@@ -17,7 +19,8 @@ export default function BasicTable() {
   const [orderName, setOrderName] = useState("");
   const [orderPrice, setOrderPrice] = useState("");
   const [promoCheck, setPromoCheck] = useState(false);
-  const [anyChange, setAnyChange] = useState(0);
+  const { anyChange, setAnyChange, selectedOrder, setSelectedOrder } =
+    useContext(OrderCtx);
 
   const getRegBill = () => {
     axios
@@ -64,6 +67,16 @@ export default function BasicTable() {
       axios
         .delete(`http://localhost:9000/delete/${id}`)
         .then(setAnyChange(anyChange + 1));
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const editHandler = (id) => {
+    try {
+      axios
+        .get(`http://localhost:9000/orders/${id}`)
+        .then((response) => setSelectedOrder(response.data));
     } catch (error) {
       console.log(error.response);
     }
@@ -156,7 +169,7 @@ export default function BasicTable() {
             <TableHead>
               <TableRow>
                 <TableCell align="center" colSpan={4}>
-                  Attending Clerk :
+                  Attending Clerk : Ryan Satria
                 </TableCell>
               </TableRow>
               <TableRow sx={{ backgroundColor: "#0077b6" }}>
@@ -204,7 +217,11 @@ export default function BasicTable() {
                       justifyContent="center"
                       alignItems="center"
                     >
-                      <Button variant="text" size="small">
+                      <Button
+                        variant="text"
+                        size="small"
+                        onClick={() => editHandler(row.id)}
+                      >
                         Edit
                       </Button>
                       <Button
@@ -218,6 +235,9 @@ export default function BasicTable() {
                   </TableCell>
                 </TableRow>
               ))}
+              {Object.keys(selectedOrder).length > 0 && (
+                <UpdateForm></UpdateForm>
+              )}
               <TableRow>
                 <TableCell colSpan={4} align="center">
                   Total Regular Bill : {regularBill}
