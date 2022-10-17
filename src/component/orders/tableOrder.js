@@ -53,33 +53,35 @@ export default function BasicTable() {
   };
 
   const addOrder = (event) => {
-      axios
-        .post(`http://localhost:9000/add`, {
-          orderName: orderName,
-          price: orderPrice,
-          isDiscounted: promoCheck,
-        })
-        .then(() => {
-          setOrderName("");
-          setOrderPrice("");
-          setPromoCheck(false);
-          setAnyChange(anyChange + 1);
-          setSuccessMessage("Order is successfully added.");
-          setTimeout(() => {
-            setSuccessMessage("");
-          }, 3000);
-        })
-        .catch(() => {
-          setErrorMessage("Unable to add order. Something went wrong.");
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 3000);
-        })
     event.preventDefault();
+    axios
+      .post(`http://localhost:9000/add`, {
+        orderName: orderName,
+        price: orderPrice,
+        isDiscounted: promoCheck,
+      })
+      .then(() => {
+        setOrderName("");
+        setOrderPrice("");
+        setPromoCheck(false);
+        setAnyChange(anyChange + 1);
+        setSuccessMessage("Order is successfully added.");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
+      })
+      .catch(() => {
+        setErrorMessage("Unable to add order. Something went wrong.");
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
+      });
   };
 
   const deleteOrder = (id) => {
-      axios.delete(`http://localhost:9000/delete/${id}`).then(() => {
+    axios
+      .delete(`http://localhost:9000/delete/${id}`)
+      .then(() => {
         setAnyChange(anyChange + 1);
         setSuccessMessage("Order is successfully deleted.");
         setTimeout(() => {
@@ -91,7 +93,7 @@ export default function BasicTable() {
         setTimeout(() => {
           setErrorMessage("");
         }, 3000);
-      })
+      });
   };
 
   const editHandler = (id) => {
@@ -173,6 +175,7 @@ export default function BasicTable() {
                   id="promo"
                   name="promo"
                   size="small"
+                  checked={promoCheck}
                   value={promoCheck}
                   onChange={(e) => setPromoCheck(!promoCheck)}
                 />
