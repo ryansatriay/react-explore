@@ -5,8 +5,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Marquee from "react-fast-marquee";
 import { OrderCtx } from "../store/OrderContext";
 import { useContext } from "react";
-import SuccessBar from "../notification/success";
-import ErrorBar from "../notification/error";
+import SuccessBar from "../notification/successNotification";
+import ErrorBar from "../notification/errorNotification";
 
 export default function TopBar() {
   const { successMessage, errorMessage } = useContext(OrderCtx);

@@ -11,8 +11,14 @@ import {
 import axios from "axios";
 
 const UpdateForm = () => {
-  const { anyChange, setAnyChange, selectedOrder, setSelectedOrder, setSuccessMessage, setErrorMessage } =
-    useContext(OrderCtx);
+  const {
+    anyChange,
+    setAnyChange,
+    selectedOrder,
+    setSelectedOrder,
+    setSuccessMessage,
+    setErrorMessage,
+  } = useContext(OrderCtx);
   const [orderName, setOrderName] = useState("");
   const [orderPrice, setOrderPrice] = useState("");
   const [promoCheck, setPromoCheck] = useState(false);
@@ -20,30 +26,29 @@ const UpdateForm = () => {
   console.log(selectedOrder);
 
   const updateOrder = (id) => {
-    try {
-      axios
-        .put(`http://localhost:9000/orders/${id}`, {
-          orderName: orderName,
-          price: orderPrice,
-          isDiscounted: promoCheck,
-        })
-        .then(() => {
-            setOrderName("");
-            setOrderPrice("");
-            setPromoCheck(false);
-            setAnyChange(anyChange + 1);
-            setSelectedOrder([]);
-            setSuccessMessage("Order is successfully updated.");
-            setTimeout(() => {
-              setSuccessMessage("");
-            }, 3000);
-          });
-    } catch (error) {
+    axios
+      .put(`http://localhost:9000/orders/${id}`, {
+        orderName: orderName,
+        price: orderPrice,
+        isDiscounted: promoCheck,
+      })
+      .then(() => {
+        setOrderName("");
+        setOrderPrice("");
+        setPromoCheck(false);
+        setAnyChange(anyChange + 1);
+        setSelectedOrder([]);
+        setSuccessMessage("Order is successfully updated.");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
+      })
+      .catch(() => {
         setErrorMessage("Unable to update item. Something went wrong.");
         setTimeout(() => {
           setErrorMessage("");
         }, 3000);
-    }
+      });
   };
   const cancelUpdate = () => {
     setSelectedOrder([]);

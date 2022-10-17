@@ -41,23 +41,18 @@ export default function BasicTable() {
   };
 
   const getData = () => {
-    try {
-      axios
-        .get("http://localhost:9000/orders")
-        .then((response) => setOrdersData(response.data))
-        .catch(() => {
-          setErrorMessage("Cannot load details. Something went wrong.");
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 3000);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    axios
+      .get("http://localhost:9000/orders")
+      .then((response) => setOrdersData(response.data))
+      .catch(() => {
+        setErrorMessage("Cannot load details. Something went wrong.");
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
+      });
   };
 
   const addOrder = (event) => {
-    try {
       axios
         .post(`http://localhost:9000/add`, {
           orderName: orderName,
@@ -73,31 +68,30 @@ export default function BasicTable() {
           setTimeout(() => {
             setSuccessMessage("");
           }, 3000);
-        });
-    } catch (error) {
-      setErrorMessage("Unable to add order. Something went wrong.");
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 3000);
-    }
+        })
+        .catch(() => {
+          setErrorMessage("Unable to add order. Something went wrong.");
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 3000);
+        })
     event.preventDefault();
   };
 
   const deleteOrder = (id) => {
-    try {
       axios.delete(`http://localhost:9000/delete/${id}`).then(() => {
         setAnyChange(anyChange + 1);
         setSuccessMessage("Order is successfully deleted.");
         setTimeout(() => {
           setSuccessMessage("");
         }, 3000);
-      });
-    } catch (error) {
-      setErrorMessage("Unable to deleted item. Something went wrong.");
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 3000);
-    }
+      })
+      .catch(() => {
+        setErrorMessage("Unable to deleted item. Something went wrong.");
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
+      })
   };
 
   const editHandler = (id) => {
