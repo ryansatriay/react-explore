@@ -12,16 +12,35 @@ import axios from "axios";
 
 export default function BasicTable() {
   const [ordersData,setOrdersData] = useState([]);
+  const [regBill,setRegBill] = useState([]);
+  const [discBill,setDiscBill] = useState([]);
+
+  const getRegBill = () => {
+    axios.get('http://localhost:9000/regbill').then((response) => setRegBill(response.data))
+  }
+
+  const getDiscBill = () => {
+    axios.get('http://localhost:9000/discbill').then((response) => setDiscBill(response.data))
+  }
 
   const getData = () => {
-    axios.get('http://localhost:9000/orders').then((response) => setOrdersData(response.data))
+    try {
+      axios.get('http://localhost:9000/orders').then((response) => setOrdersData(response.data))
+    } catch (error) {
+      console.log(error.response)
+    }
   }
 
   useEffect(() => {
     // Update the document title using the browser API
     getData()
+    getRegBill()
+    getDiscBill()
   },[]);
 
+  let regularBill = Number(regBill.data).toFixed(2)
+  let discountedBill = Number(discBill.data).toFixed(2)
+  
   return (
     <Stack spacing={1}>
       {/* ForInput */}
@@ -163,12 +182,12 @@ export default function BasicTable() {
               ))}
               <TableRow>
                 <TableCell colSpan={4} align="center">
-                  Total Regular Bill :{" "}
+                  Total Regular Bill : {regularBill}
                 </TableCell>
               </TableRow>
               <TableRow sx={{ backgroundColor: "#caf0f8" }}>
                 <TableCell colSpan={4} align="center">
-                  Total Discount Bill :{" "}
+                  Total Discount Bill :{discountedBill}
                 </TableCell>
               </TableRow>
             </TableBody>
