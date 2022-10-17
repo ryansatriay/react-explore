@@ -7,16 +7,21 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Divider, Stack, TextField, Checkbox, Button } from "@mui/material";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-];
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function BasicTable() {
+  const [ordersData,setOrdersData] = useState([]);
+
+  const getData = () => {
+    axios.get('http://localhost:9000/orders').then((response) => setOrdersData(response.data))
+  }
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    getData()
+  },[]);
+
   return (
     <Stack spacing={1}>
       {/* ForInput */}
@@ -126,16 +131,19 @@ export default function BasicTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {ordersData.map((row) => (
                 <TableRow
-                  key={row.name}
+                  key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {row.orderName}
                   </TableCell>
-                  <TableCell align="center">{row.calories}</TableCell>
-                  <TableCell align="center">{row.fat}</TableCell>
+                  <TableCell align="center">${row.price}</TableCell>
+                  <TableCell align="center">
+                    {row.isDiscounted && <Checkbox disabled checked/>} 
+                    {!row.isDiscounted && <Checkbox disabled/>}   
+                  </TableCell>
                   <TableCell align="center">
                     <Stack
                       spacing={5}
