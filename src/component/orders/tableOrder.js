@@ -19,8 +19,14 @@ export default function BasicTable() {
   const [orderName, setOrderName] = useState("");
   const [orderPrice, setOrderPrice] = useState("");
   const [promoCheck, setPromoCheck] = useState(false);
-  const { anyChange, setAnyChange, selectedOrder, setSelectedOrder } =
-    useContext(OrderCtx);
+  const {
+    anyChange,
+    setAnyChange,
+    selectedOrder,
+    setSelectedOrder,
+    setSuccessMessage,
+    setErrorMessage,
+  } = useContext(OrderCtx);
 
   const getRegBill = () => {
     axios
@@ -46,19 +52,23 @@ export default function BasicTable() {
 
   const addOrder = (event) => {
     try {
-      axios
-        .post(`http://localhost:9000/add`, {
-          orderName: orderName,
-          price: orderPrice,
-          isDiscounted: promoCheck,
-        })
-        .then(
-          setOrderName(""),
-          setOrderPrice(""),
-          setPromoCheck(false),
-          setAnyChange(anyChange + 1)
-        );
-    } catch (error) {}
+      axios.post(`http://localhost:9000/add`, {
+        orderName: orderName,
+        price: orderPrice,
+        isDiscounted: promoCheck,
+      }).then(() => {
+        setOrderName("");
+        setOrderPrice("");
+        setPromoCheck(false);
+        setAnyChange(anyChange + 1);
+        setSuccessMessage("Berhasil Tambah Data");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 2000);
+      });
+    } catch (error) {
+      setErrorMessage("Gagal Tambah Data");
+    }
     event.preventDefault();
   };
 
@@ -66,9 +76,12 @@ export default function BasicTable() {
     try {
       axios
         .delete(`http://localhost:9000/delete/${id}`)
-        .then(setAnyChange(anyChange + 1));
+        .then(
+          setAnyChange(anyChange + 1),
+          setSuccessMessage("Berhasil Hapus Data")
+        );
     } catch (error) {
-      console.log(error.response);
+      setErrorMessage("Gagal Tambah Data");
     }
   };
 
@@ -132,6 +145,7 @@ export default function BasicTable() {
                   name="orderName"
                   type="name"
                   size="small"
+                  value={orderName}
                   onChange={(e) => setOrderName(e.target.value)}
                 />
               </TableCell>
@@ -141,6 +155,7 @@ export default function BasicTable() {
                   name="price"
                   type="name"
                   size="small"
+                  value={orderPrice}
                   onChange={(e) => setOrderPrice(e.target.value)}
                 />
               </TableCell>
@@ -149,6 +164,7 @@ export default function BasicTable() {
                   id="promo"
                   name="promo"
                   size="small"
+                  value={promoCheck}
                   onChange={(e) => setPromoCheck(!promoCheck)}
                 />
               </TableCell>

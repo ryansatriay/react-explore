@@ -6,18 +6,18 @@ import {
   Checkbox,
   Button,
   TextField,
-  Stack
+  Stack,
 } from "@mui/material";
 import axios from "axios";
 
 const UpdateForm = () => {
-  const { anyChange, setAnyChange, selectedOrder, setSelectedOrder } =
+  const { anyChange, setAnyChange, selectedOrder, setSelectedOrder, setSuccessMessage, setErrorMessage } =
     useContext(OrderCtx);
   const [orderName, setOrderName] = useState("");
   const [orderPrice, setOrderPrice] = useState("");
   const [promoCheck, setPromoCheck] = useState(false);
 
-  console.log(selectedOrder)
+  console.log(selectedOrder);
 
   const updateOrder = (id) => {
     try {
@@ -32,10 +32,11 @@ const UpdateForm = () => {
           setOrderPrice(""),
           setPromoCheck(false),
           setSelectedOrder([]),
-          setAnyChange(anyChange + 1)
+          setAnyChange(anyChange + 1),
+          setSuccessMessage('Berhasil Edit Data')
         );
     } catch (error) {
-      console.log(error.response);
+      setErrorMessage('Gagal Edit Data')
     }
   };
   const cancelUpdate = () => {
@@ -43,11 +44,15 @@ const UpdateForm = () => {
     setAnyChange(anyChange + 1);
   };
 
+  const getData = () => {
+    setOrderName(selectedOrder.orderName);
+    setOrderPrice(selectedOrder.price);
+    setPromoCheck(selectedOrder.isDiscounted);
+  };
+
   useEffect(() => {
-    setOrderName(selectedOrder.orderName)
-    setOrderPrice(selectedOrder.price)
-    setPromoCheck(selectedOrder.isDiscounted)
-  }, [])
+    getData();
+  }, []);
 
   return (
     <TableRow>
