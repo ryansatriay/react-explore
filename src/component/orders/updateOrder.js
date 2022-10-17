@@ -27,16 +27,22 @@ const UpdateForm = () => {
           price: orderPrice,
           isDiscounted: promoCheck,
         })
-        .then(
-          setOrderName(""),
-          setOrderPrice(""),
-          setPromoCheck(false),
-          setSelectedOrder([]),
-          setAnyChange(anyChange + 1),
-          setSuccessMessage('Berhasil Edit Data')
-        );
+        .then(() => {
+            setOrderName("");
+            setOrderPrice("");
+            setPromoCheck(false);
+            setAnyChange(anyChange + 1);
+            setSelectedOrder([]);
+            setSuccessMessage("Order is successfully updated.");
+            setTimeout(() => {
+              setSuccessMessage("");
+            }, 3000);
+          });
     } catch (error) {
-      setErrorMessage('Gagal Edit Data')
+        setErrorMessage("Unable to update item. Something went wrong.");
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
     }
   };
   const cancelUpdate = () => {

@@ -6,9 +6,11 @@ import Marquee from "react-fast-marquee";
 import { OrderCtx } from "../store/OrderContext";
 import { useContext } from "react";
 import SuccessBar from "../notification/success";
+import ErrorBar from "../notification/error";
 
 export default function TopBar() {
-  const { successMessage } = useContext(OrderCtx);
+  const { successMessage, errorMessage } = useContext(OrderCtx);
+  console.log(errorMessage)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "black" }}>
@@ -27,6 +29,7 @@ export default function TopBar() {
           <Marquee style={{fontWeight : 'bold'}} gradient={false}>5% DISCOUNT ON ALL ESPRESSO BAR DRINKS!!! BUY NOW!</Marquee>
       </AppBar>
       {successMessage !== '' && <SuccessBar/>}
+      {errorMessage !== '' && <ErrorBar/>}
     </Box>
   );
 }

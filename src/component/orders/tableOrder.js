@@ -44,44 +44,59 @@ export default function BasicTable() {
     try {
       axios
         .get("http://localhost:9000/orders")
-        .then((response) => setOrdersData(response.data));
+        .then((response) => setOrdersData(response.data))
+        .catch(() => {
+          setErrorMessage("Cannot load details. Something went wrong.");
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 3000);
+        });
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 
   const addOrder = (event) => {
     try {
-      axios.post(`http://localhost:9000/add`, {
-        orderName: orderName,
-        price: orderPrice,
-        isDiscounted: promoCheck,
-      }).then(() => {
-        setOrderName("");
-        setOrderPrice("");
-        setPromoCheck(false);
-        setAnyChange(anyChange + 1);
-        setSuccessMessage("Berhasil Tambah Data");
-        setTimeout(() => {
-          setSuccessMessage("");
-        }, 2000);
-      });
+      axios
+        .post(`http://localhost:9000/add`, {
+          orderName: orderName,
+          price: orderPrice,
+          isDiscounted: promoCheck,
+        })
+        .then(() => {
+          setOrderName("");
+          setOrderPrice("");
+          setPromoCheck(false);
+          setAnyChange(anyChange + 1);
+          setSuccessMessage("Order is successfully added.");
+          setTimeout(() => {
+            setSuccessMessage("");
+          }, 3000);
+        });
     } catch (error) {
-      setErrorMessage("Gagal Tambah Data");
+      setErrorMessage("Unable to add order. Something went wrong.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
     }
     event.preventDefault();
   };
 
   const deleteOrder = (id) => {
     try {
-      axios
-        .delete(`http://localhost:9000/delete/${id}`)
-        .then(
-          setAnyChange(anyChange + 1),
-          setSuccessMessage("Berhasil Hapus Data")
-        );
+      axios.delete(`http://localhost:9000/delete/${id}`).then(() => {
+        setAnyChange(anyChange + 1);
+        setSuccessMessage("Order is successfully deleted.");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
+      });
     } catch (error) {
-      setErrorMessage("Gagal Tambah Data");
+      setErrorMessage("Unable to deleted item. Something went wrong.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
     }
   };
 
