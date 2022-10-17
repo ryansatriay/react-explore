@@ -12,7 +12,7 @@ export default function TopBar() {
           <Box
             component="img"
             sx={{
-              height: 96,
+              height: 66,
               width: 374,
             }}
             src="/images/header-img.png"

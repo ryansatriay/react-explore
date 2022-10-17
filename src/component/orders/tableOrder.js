@@ -14,9 +14,10 @@ export default function BasicTable() {
   const [ordersData, setOrdersData] = useState([]);
   const [regBill, setRegBill] = useState([]);
   const [discBill, setDiscBill] = useState([]);
-  const [orderName, setOrderName] = useState('');
-  const [orderPrice, setOrderPrice] = useState('');
+  const [orderName, setOrderName] = useState("");
+  const [orderPrice, setOrderPrice] = useState("");
   const [promoCheck, setPromoCheck] = useState(false);
+  const [anyChange, setAnyChange] = useState(0);
 
   const getRegBill = () => {
     axios
@@ -40,43 +41,39 @@ export default function BasicTable() {
     }
   };
 
-  // const addOrderS  = () => {
-  //   console.log(orderName)
-  //   console.log(orderPrice)
-  //   console.log(promoCheck)
-  // }
-
   const addOrder = (event) => {
     try {
       axios
-        .post(`http://localhost:9000/add` , {
+        .post(`http://localhost:9000/add`, {
           orderName: orderName,
           price: orderPrice,
-          isDiscounted:promoCheck
+          isDiscounted: promoCheck,
         })
         .then(
-          setOrderName(''),
-          setOrderPrice(''),
-          setPromoCheck(false)
+          setOrderName(""),
+          setOrderPrice(""),
+          setPromoCheck(false),
+          setAnyChange(anyChange + 1)
         );
     } catch (error) {}
-    event.preventDefault()
+    event.preventDefault();
   };
 
   const deleteOrder = (id) => {
     try {
-      axios.delete(`http://localhost:9000/delete/${id}`);
+      axios
+        .delete(`http://localhost:9000/delete/${id}`)
+        .then(setAnyChange(anyChange + 1));
     } catch (error) {
       console.log(error.response);
     }
   };
 
   useEffect(() => {
-    // Update the document title using the browser API
     getData();
     getRegBill();
     getDiscBill();
-  }, []);
+  }, [anyChange]);
 
   let regularBill = Number(regBill.data).toFixed(2);
   let discountedBill = Number(discBill.data).toFixed(2);
@@ -120,12 +117,8 @@ export default function BasicTable() {
                 <TextField
                   id="orderName"
                   name="orderName"
-                  // label="Order item"
-                  // InputLabelProps={{ shrink: true }}
                   type="name"
                   size="small"
-                  // value={setValue('email', contactEmail )}
-                  // {...register("email", { required: true })}
                   onChange={(e) => setOrderName(e.target.value)}
                 />
               </TableCell>
@@ -133,17 +126,13 @@ export default function BasicTable() {
                 <TextField
                   id="price"
                   name="price"
-                  // label="Order item"
-                  // InputLabelProps={{ shrink: true }}
                   type="name"
                   size="small"
-                  // value={setValue('email', contactEmail )}
-                  // {...register("email", { required: true })}
                   onChange={(e) => setOrderPrice(e.target.value)}
                 />
               </TableCell>
               <TableCell align="center">
-                <Checkbox 
+                <Checkbox
                   id="promo"
                   name="promo"
                   size="small"
