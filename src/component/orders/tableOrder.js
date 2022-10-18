@@ -30,19 +30,19 @@ export default function BasicTable() {
 
   const getRegBill = () => {
     axios
-      .get("http://localhost:9000/regbill")
+      .get("http://localhost:8181/coffeeteariaapi/regbill")
       .then((response) => setRegBill(response.data));
   };
 
   const getDiscBill = () => {
     axios
-      .get("http://localhost:9000/discbill")
+      .get("http://localhost:8181/coffeeteariaapi/discbill")
       .then((response) => setDiscBill(response.data));
   };
 
   const getData = () => {
     axios
-      .get("http://localhost:9000/orders")
+      .get("http://localhost:8181/coffeeteariaapi/orders")
       .then((response) => setOrdersData(response.data))
       .catch(() => {
         setErrorMessage("Cannot load details. Something went wrong.");
@@ -55,7 +55,7 @@ export default function BasicTable() {
   const addOrder = (event) => {
     event.preventDefault();
     axios
-      .post(`http://localhost:9000/add`, {
+      .post(`http://localhost:8181/coffeeteariaapi/add`, {
         orderName: orderName,
         price: orderPrice,
         isDiscounted: promoCheck,
@@ -80,7 +80,7 @@ export default function BasicTable() {
 
   const deleteOrder = (id) => {
     axios
-      .delete(`http://localhost:9000/delete/${id}`)
+      .delete(`http://localhost:8181/coffeeteariaapi/${id}`)
       .then(() => {
         setAnyChange(anyChange + 1);
         setSuccessMessage("Order is successfully deleted.");
@@ -99,7 +99,7 @@ export default function BasicTable() {
   const editHandler = (id) => {
     try {
       axios
-        .get(`http://localhost:9000/orders/${id}`)
+        .get(`http://localhost:8181/coffeeteariaapi/orders/${id}`)
         .then((response) => setSelectedOrder(response.data));
     } catch (error) {
       console.log(error.response);
