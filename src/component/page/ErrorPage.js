@@ -20,7 +20,7 @@ const ErrorPage = () => {
             <Typography variant="h1" style={{ color: "black" }}>
               404
             </Typography>
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to="/home" style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
                 size="small"
