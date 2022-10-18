@@ -10,8 +10,8 @@ function App() {
       <OrderProvider>
         <Router>
           <Routes>
-            <Route path="/coffeteariaweb/" element={<LandingPage />}></Route>
-            <Route path="/*" element={<ErrorPage />}></Route>
+            <Route path="/coffeeteariaweb/" element={<LandingPage />}></Route>
+            <Route path="/coffeeteariaweb/*" element={<ErrorPage />}></Route>
           </Routes>
         </Router>
       </OrderProvider>
