@@ -14,7 +14,7 @@ export default function OrderBox() {
               height: 490,
               width: 348,
             }}
-            src="/images/menu.png"
+            src="./images/menu.png"
           />
         </Grid>
         <Grid item xs={8} md={8}>

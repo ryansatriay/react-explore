@@ -20,7 +20,7 @@ export default function TopBar() {
               height: 66,
               width: 374,
             }}
-            src="/images/header-img.png"
+            src="./images/header-img.png"
           />
         </Toolbar>
       </AppBar>
