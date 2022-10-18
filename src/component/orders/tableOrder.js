@@ -80,7 +80,7 @@ export default function BasicTable() {
 
   const deleteOrder = (id) => {
     axios
-      .delete(`http://localhost:8181/coffeeteariaapi/${id}`)
+      .delete(`http://localhost:8181/coffeeteariaapi/delete/${id}`)
       .then(() => {
         setAnyChange(anyChange + 1);
         setSuccessMessage("Order is successfully deleted.");
