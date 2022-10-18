@@ -10,8 +10,8 @@ function App() {
       <OrderProvider>
         <Router>
           <Routes>
-            <Route path="/home" element={<LandingPage />}></Route>
-            <Route path="*" element={<ErrorPage />}></Route>
+            <Route path="/" element={<LandingPage />}></Route>
+            <Route path="/*" element={<ErrorPage />}></Route>
           </Routes>
         </Router>
       </OrderProvider>
