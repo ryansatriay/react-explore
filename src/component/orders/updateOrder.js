@@ -27,7 +27,7 @@ const UpdateForm = () => {
 
   const updateOrder = (id) => {
     axios
-      .put(`http://localhost:8181/coffeeteariaapi/${id}`, {
+      .put(`http://localhost:8181/coffeeteariaapi/orders/${id}`, {
         orderName: orderName,
         price: orderPrice,
         isDiscounted: promoCheck,
