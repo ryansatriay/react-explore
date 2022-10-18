@@ -69,8 +69,8 @@ const UpdateForm = () => {
     <TableRow>
       <TableCell align="center">
         <TextField
-          id="orderName"
-          name="orderName"
+          id="orderName_upd"
+          name="orderName_upd"
           type="name"
           size="small"
           value={orderName}
@@ -79,8 +79,8 @@ const UpdateForm = () => {
       </TableCell>
       <TableCell align="center">
         <TextField
-          id="price"
-          name="price"
+          id="price_upd"
+          name="price_upd"
           type="name"
           size="small"
           value={orderPrice}
@@ -89,8 +89,8 @@ const UpdateForm = () => {
       </TableCell>
       <TableCell align="center">
         <Checkbox
-          id="promo"
-          name="promo"
+          id="promo_upd"
+          name="promo_upd"
           size="small"
           checked={promoCheck === true ? "checked" : ""}
           onChange={(e) => setPromoCheck(!promoCheck)}
@@ -104,6 +104,7 @@ const UpdateForm = () => {
           alignItems="center"
         >
           <Button
+            id="btn_update"
             variant="text"
             size="small"
             onClick={() => updateOrder(selectedOrder.id)}

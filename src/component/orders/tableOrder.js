@@ -181,7 +181,7 @@ export default function BasicTable() {
                 />
               </TableCell>
               <TableCell align="center">
-                <Button variant="contained" size="small" onClick={addOrder}>
+                <Button id="btn_add" variant="contained" size="small" onClick={addOrder}>
                   Place Order
                 </Button>
               </TableCell>
@@ -246,6 +246,7 @@ export default function BasicTable() {
                       alignItems="center"
                     >
                       <Button
+                        id="btn_edit"
                         variant="text"
                         size="small"
                         onClick={() => editHandler(row.id)}
@@ -253,6 +254,7 @@ export default function BasicTable() {
                         Edit
                       </Button>
                       <Button
+                        id="btn_delete"
                         variant="text"
                         size="small"
                         onClick={() => deleteOrder(row.id)}

@@ -10,7 +10,6 @@ import ErrorBar from "../notification/errorNotification";
 
 export default function TopBar() {
   const { successMessage, errorMessage } = useContext(OrderCtx);
-  console.log(errorMessage)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "black" }}>
