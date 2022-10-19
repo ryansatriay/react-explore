@@ -11,7 +11,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/coffeeteariaweb/" element={<LandingPage />}></Route>
-            <Route path="/coffeeteariaweb/*" element={<ErrorPage />}></Route>
+            <Route path="*" element={<ErrorPage />}></Route>
           </Routes>
         </Router>
       </OrderProvider>
